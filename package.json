@@ -1,0 +1,27 @@
+{
+    "name": "node_server",
+    "version": "0.1.0beta0",
+    "description": "",
+    "homepage": "",
+    "author": {
+        "name": "Zak Croft"
+
+    },
+    "keywords": [
+        "node-example"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/zakcroft/node-server.git"
+    },
+    "engines": {
+        "node": ">=0.6.0"
+    },
+    "dependencies": {
+
+    },
+    "devDependencies": {
+        "node-inspector": "0.2.0beta3",
+        "hotnode": "0.0.8"
+    }
+}
