@@ -33,15 +33,14 @@ http.createServer(function (req, res) {
             res.end(typeof page.output === 'function' ? page.output() : page.output);
         }
 
-    })
+    });
 
     if (res.finish) {
         res.writeHead(404);
         res.end('Page Not Found');
-    };
+    }
 
-}).listen(8080)
+}).listen(8080);
 
-console.log('running server');
 
 
