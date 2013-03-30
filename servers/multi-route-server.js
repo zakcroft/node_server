@@ -13,16 +13,15 @@ var url = require('url');
 
 
 var pages = [
-    {route: '/', output: 'Woohoo!'},
+    {route: '/', output: 'root url'},
     {route: '/about/this', output: 'Multilevel routing with Node example'},
     {route: '/about/node', output: 'Evented I/O for V8 JavaScript.'},
     {route: '/another page', output: function () {
         return 'Here\'s ' + this.route;
     }}
-];
+]
 
-
-http.createServer(function (req, res) {
+exports.server = http.createServer(function (req, res) {
 
     var parsedUrl = url.parse(decodeURI(req.url), true);
     //var pathArr = parseUrl.pathname.split('/').splice(1);
@@ -40,7 +39,13 @@ http.createServer(function (req, res) {
         res.end('Page Not Found');
     }
 
-}).listen(8080);
+
+
+});
+
+
+console.log('running at 8080');
+
 
 
 

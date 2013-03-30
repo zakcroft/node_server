@@ -22,6 +22,7 @@
     },
     "devDependencies": {
         "node-inspector": "0.2.0beta3",
-        "hotnode": "0.0.8"
+        "hotnode": "0.0.8",
+        "nodeunit": "0.7.4"
     }
 }
