@@ -37,43 +37,47 @@ var server = require("../servers/multi-route-server").server,
 
 module.exports = {
 
-    setup: function(done) {
-        server.listen(PORT);
-        options.path = null;
-        done()
-
-    },
-
-    'testRoot' : function(test) {
-        server.listen(PORT);
-
-        options.path = '/';
-
-       http.request(options, function (response) {
-          console.log('STATUS: ' + response.statusCode +" \n");
-
-           response.on('end', function () {
-              console.log('end res');
-          });
-
-          test.equal(response.url, '', 'first test message');
-          test.done();
-
-
-
-       }).end();
-
-
+    setUp: function (done) {
         server.on('listening',function(){
             console.log('ok, server is running \n');
-
         });
-
         server.on('close',function(){
             console.log('ended event fired \n');
         });
 
 
+        server.listen(PORT);
+        options.path = null;
+        done()
+    },
+    tearDown: function (done) {
+
+        server.close(function(){
+            console.log('close')
+        });
+
+        done();
+    },
+
+    'testRoot' : function(test) {
+
+        options.path = '/';
+
+       var req = http.request(options, function (res) {
+//          console.log('STATUS: ' + response.statusCode +" \n");
+//          test.equal(response.url, '', 'first test message');
+//          test.done();
+           console.log('STATUS: ' + res.statusCode);
+           console.log('HEADERS: ' + JSON.stringify(res.headers));
+           res.setEncoding('utf8');
+//           res.on('data', function (chunk) {
+//               console.log('BODY: ' + chunk);
+//           });
+           req.write('data\n');
+           test.done();
+       });
+
+        req.end();
     }
 };
 
