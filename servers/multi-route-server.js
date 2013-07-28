@@ -1,11 +1,3 @@
-/**
- * Created with JetBrains WebStorm.
- * User: zak
- * Date: 04/03/13
- * Time: 16:47
- * To change this template use File | Settings | File Templates.
- */
-
 
 var http = require('http');
 var path = require('path');
@@ -21,18 +13,35 @@ var pages = [
     }}
 ]
 
-exports.server = http.createServer(function (req, res) {
-
+var server = http.createServer(function (req, res) {
     var parsedUrl = url.parse(decodeURI(req.url), true);
-    //var pathArr = parseUrl.pathname.split('/').splice(1);
+    var pageData = "";
+    var reqData
+
+    req.on('error', function (e) {
+        console.log('problem with request: ' + e.message);
+    });
+
+    req.on('data', function (chunk) {
+       reqData += chunk;
+    });
 
     pages.forEach(function (page) {
         if (page.route === parsedUrl.pathname) {
             res.writeHead(200, {'Content-Type': 'text/html'});
+
+            res.on('data', function (chunk) {
+                pageData += chunk;
+            });
+
+            res.on('end', function (chunk) {
+               console.log(pageData);
+            });
+
             res.end(typeof page.output === 'function' ? page.output() : page.output);
         }
 
-    });
+    })
 
     if (res.finish) {
         res.writeHead(404);
@@ -43,6 +52,9 @@ exports.server = http.createServer(function (req, res) {
 
 });
 
+exports.server = server;
+
+server.listen(8080);
 
 console.log(' multi server running at 8080 \n');
 

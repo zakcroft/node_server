@@ -8,7 +8,7 @@ var mimeTypes = {
     '.css' : 'text/css'
 };
 
-var contentFolder = 'content';
+var contentFolder = '../content';
 
 http.createServer(function (request, response) {
 
@@ -25,7 +25,7 @@ http.createServer(function (request, response) {
                     response.end('Server Error!');
                     return;
                 }
-                var headers = {'Content-type': mimeTypes[path.extname(lookup)]};
+                var headers = {'Content-type': mimeTypes[path.extname(filePath)]};
                 response.writeHead(200, headers);
                 response.end(data);
             });
